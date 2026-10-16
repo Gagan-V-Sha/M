@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .page {
+            page-break-after: always;
+            padding: 40px;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #000;
+        }
+
+        .section-header {
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+
+        .index-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .index-table th,
+        .index-table td {
+            border: 1px solid #000;
+            padding: 8px;
+        }
+
+        .index-table th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+
+        .index-table .page-no {
+            width: 80px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .text-block {
+            margin-bottom: 20px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        /* Matrix Specifics */
+        .col-no {
+            width: 40px;
+            text-align: center;
+        }
+
+        .col-req {
+            width: auto;
+        }
+
+        .col-app {
+            width: 90px;
+        }
+
+        .col-std {
+            width: 140px;
+        }
+
+        .col-evid {
+            width: 160px;
+        }
+
+        .col-notes {
+            width: 120px;
+        }
+
+        @media print {
+            tr {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- PAGE 1: FRONT MATTER -->
+    <div class="page">
+        <h2 class="section-header">Purpose of the document</h2>
+        <div class="text-block">{{ purpose or 'No purpose defined.' }}</div>
+
+        <h2 class="section-header">Intended audience</h2>
+        <div class="text-block" style="white-space: nowrap;">This document is addressed to auditors / notified bodies,
+            as well as project managers
+            and persons responsible for accreditation, as well as the company employees named in the project team (see
+            Annex (1)).</div>
+
+        <h2 class="section-header" style="margin-top: 50px;">Index</h2>
+
+        <table class="index-table">
+            <thead>
+                <tr>
+                    <th>Section / Description</th>
+                    <th class="page-no">Page</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Version management</td>
+                    <td class="page-no">1</td>
+                </tr>
+                <tr>
+                    <td>Purpose of the document</td>
+                    <td class="page-no">1</td>
+                </tr>
+                <tr>
+                    <td>Intended audience</td>
+                    <td class="page-no">1</td>
+                </tr>
+                <tr>
+                    <td>Index</td>
+                    <td class="page-no">1</td>
+                </tr>
+                <tr>
+                    <td>Identification of the product</td>
+                    <td class="page-no">2</td>
+                </tr>
+                <tr>
+                    <td>1. Applicable standards and guidance documents</td>
+                    <td class="page-no">3</td>
+                </tr>
+                <tr>
+                    <td>2. Methods</td>
+                    <td class="page-no">4</td>
+                </tr>
+                <tr>
+                    <td>3. General Safety and Performance Requirements MDR</td>
+                    <td class="page-no">5</td>
+                </tr>
+                <tr>
+                    <td>4. Final conformity evaluation</td>
+                    <td class="page-no">...</td>
+                </tr>
+                <tr>
+                    <td>Annex</td>
+                    <td class="page-no">...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PAGE 2: PRODUCT IDENTIFICATION -->
+    <div class="page">
+        <h2 class="section-header">Identification of the product</h2>
+        <div style="margin-bottom: 15px;">
+            <strong>Device Name:</strong> {{ device_name }}<br>
+            <strong>Model Code:</strong> {{ model_code or 'N/A' }}<br>
+            <strong>Document Reference:</strong> {{ document_number or 'N/A' }}
+        </div>
+        <div class="text-block">{{ product_description or 'No product identification provided.' }}</div>
+    </div>
+
+    <!-- PAGE 3: APPLICABLE STANDARDS -->
+    <div class="page">
+        <h2 class="section-header">1. Applicable standards and guidance documents</h2>
+        <p>The following standards were used to verify conformity. Additionally applicable guidance documents were used.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 250px;">Designation of the document</th>
+                    <th>Title</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for std in applicable_standards %}
+                <tr>
+                    <td><strong>{{ std.code }}</strong></td>
+                    <td>{{ std.title }}</td>
+                </tr>
+                {% endfor %}
+                {% if not applicable_standards %}
+                <tr>
+                    <td colspan="2" style="text-align: center; color: #666;">No standards linked in the matrix.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PAGE 4: METHODS -->
+    <div class="page">
+        <h2 class="section-header">2. Methods</h2>
+        <p>The following methods were used for the safety and performance evaluation. (Placeholder content according to
+            project requirements).</p>
+    </div>
+
+    <!-- PAGE 5+: GSPR MATRIX -->
+    <div class="page">
+        <h2 class="section-header">3. General Safety and Performance Requirements MDR</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th class="col-no">No.</th>
+                    <th class="col-req">Requirement according to Annex 1 MDR</th>
+                    <th class="col-app">Applicability</th>
+                    <th class="col-std">Applied standards</th>
+                    <th class="col-evid">Evidence document</th>
+                    <th class="col-notes">Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for chapter, rows in grouped_rows %}
+                <tr>
+                    <td colspan="6" style="background-color: #f2f2f2; font-weight: bold; padding: 10px;">{{ chapter }}
+                    </td>
+                </tr>
+                {% for row in rows %}
+                <tr>
+                    <td class="col-no">{{ row.gspr_requirement.full_reference.replace('GSPR ', '') }}</td>
+                    <td class="col-req">{{ row.gspr_requirement.text }}</td>
+                    <td class="col-app" style="text-transform: capitalize;">{{ (row.applicability or '-').replace('_', '
+                        ') }}</td>
+                    <td class="col-std">
+                        {% for std in row.standards %}<div style="margin-bottom: 2px;">{{ std.code }}</div>{% endfor %}
+                    </td>
+                    <td class="col-evid">
+                        {% for evid in row.evidence_documents %}
+                        <div style="margin-bottom: 6px; line-height: 1.3;">
+                            <strong>{{ evid.tdd_number }}</strong> - {{ evid.title or 'Document' }}
+                        </div>
+                        {% endfor %}
+                    </td>
+                    <td class="col-notes">{{ row.notes or '' }}</td>
+                </tr>
+                {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PAGE FINAL - 1: FINAL EVALUATION -->
+    <div class="page">
+        <h2 class="section-header">4. Final conformity evaluation</h2>
+        <p>This section documents the final evaluation of conformity for the device under the current project state.</p>
+    </div>
+
+    <!-- PAGE FINAL: ANNEX -->
+    <div class="page">
+        <h2 class="section-header">Annex</h2>
+        <p>The following technical documentation and evidence files are referenced as proof of compliance for the GSPR
+            requirements listed in this document.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 150px;">TDD Number</th>
+                    <th>Document Title</th>
+                    <th style="width: 80px;">Version</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for evid in annex_evidence %}
+                <tr>
+                    <td><strong>{{ evid.tdd_number }}</strong></td>
+                    <td>{{ evid.title }}</td>
+                    <td>{{ evid.version }}</td>
+                </tr>
+                {% endfor %}
+                {% if not annex_evidence %}
+                <tr>
+                    <td colspan="3" style="text-align: center; color: #666;">No evidence documents linked.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

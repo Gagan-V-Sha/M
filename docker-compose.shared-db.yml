@@ -1,0 +1,18 @@
+# Overlay for Pi + workstation sharing one Postgres.
+# On the Pi:
+#   docker compose -f docker-compose.yml -f docker-compose.shared-db.yml up -d db
+# (or up -d for full stack)
+#
+# Then point BOTH machines at the same DATABASE_URL (use the Pi's LAN IP from the workstation).
+
+services:
+  db:
+    # Publish Postgres to the LAN so the workstation can write mappings.
+    # Override bind if needed, e.g. POSTGRES_BIND=192.168.1.50
+    ports:
+      - "${POSTGRES_BIND:-0.0.0.0}:${POSTGRES_HOST_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-gspr} -d ${POSTGRES_DB:-gspr_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

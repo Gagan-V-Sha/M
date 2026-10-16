@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+:root {
+    --twh-text: #e9e9e9;
+    --twh-border: #3e3e3e;
+    --twh-highlight: #7a137f;
+}
+
+.twh-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 16px 2px 6px;
+}
+
+.twh-title {
+    margin: 0;
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--twh-text);
+}
+
+.twh-help {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid var(--twh-border);
+    color: #fff;
+    background: transparent;
+    text-decoration: none; 
+    cursor: pointer;
+    transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+
+    .twh-help:hover {
+        background: rgba(122, 19, 127, 0.18);
+        border-color: var(--twh-highlight);
+        color: #fff;
+    }
+
+    .twh-help:focus-visible {
+        outline: 3px solid rgba(122, 19, 127, 0.6);
+        outline-offset: 2px;
+        border-color: var(--twh-highlight);
+    }
+
+.twh-help__icon {
+    display: block;
+}

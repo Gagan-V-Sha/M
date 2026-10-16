@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+
+/* Segment (top radios) */
+.rbr-segment {
+    background: var(--rbr-panel);
+    border: 1px solid var(--rbr-border);
+    border-radius: 10px;
+    padding: 10px;
+    display: grid;
+    gap: 8px;
+}
+
+/* Each row: label left, radios right */
+.rbr-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 8px;
+    border-radius: 8px;
+}
+
+    .rbr-row:hover {
+        background: rgba(255,255,255,0.04);
+    }
+
+.rbr-label {
+    color: var(--rbr-text);
+    font-weight: 600;
+    font-size: 14px;
+    font-family: 'Comfortaa', sans-serif;
+}
+
+.rbr-options {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.rbr-radio {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: var(--rbr-muted);
+    user-select: none;
+}
+
+    .rbr-radio input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+        width: 1px;
+        height: 1px;
+    }
+
+.rbr-radio__custom {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #666;
+    border-radius: 50%;
+    position: relative;
+    flex: 0 0 auto;
+    transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.rbr-radio__label {
+    font-size: 14px;
+    font-family: 'Comfortaa', sans-serif;
+    color: var(--rbr-text);
+}
+
+/* Checked state */
+.rbr-radio > input[type="radio"]:checked + .rbr-radio__custom {
+    border-color: var(--rbr-highlight);
+    box-shadow: 0 0 0 3px rgba(122, 19, 127, 0.25);
+}
+
+    .rbr-radio > input[type="radio"]:checked + .rbr-radio__custom::after {
+        content: "";
+        position: absolute;
+        inset: 3px;
+        background: var(--rbr-highlight);
+        border-radius: 50%;
+    }
+
+/* Focus ring */
+.rbr-radio > input[type="radio"]:focus-visible + .rbr-radio__custom {
+    outline: 3px solid rgba(122, 19, 127, 0.6);
+    outline-offset: 2px;
+}

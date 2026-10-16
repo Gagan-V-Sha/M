@@ -1,0 +1,61 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: etd-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-gspr}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-gspr_secure_password}
+      POSTGRES_DB: ${POSTGRES_DB:-gspr_db}
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    # Default: only reachable from other compose services.
+    # For Pi + workstation sharing, also use docker-compose.shared-db.yml
+    # which publishes port 5432 to the LAN.
+    networks:
+      - etd-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-gspr} -d ${POSTGRES_DB:-gspr_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: etd-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend_data:/app/data
+      - ./uploads:/app/uploads
+    env_file:
+      - .env
+    environment:
+      # Fix 3.4: PostgreSQL connection string
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-gspr}:${POSTGRES_PASSWORD:-gspr_secure_password}@db:5432/${POSTGRES_DB:-gspr_db}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - etd-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build: ./frontend
+    container_name: etd-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - etd-network
+
+networks:
+  etd-network:
+    driver: bridge

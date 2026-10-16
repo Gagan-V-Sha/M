@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+
+/* Color scheme */
+:root {
+    --sb-base: #323232; /* standard color */
+    --sb-highlight: #7a137f; /* highlight color */
+    --sb-bg: #323232;
+    --sb-text: #e9e9e9;
+    --sb-muted: #bdbdbd;
+    --sb-border: #3e3e3e;
+    --sb-focus: #c96bcd; /* highlight tint for focus outline */
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.sb-container {
+    width: 280px;
+    min-width: 240px;
+    height: 180vh;
+    background: var(--sb-bg);
+    color: var(--sb-text);
+    border-right: 1px solid var(--sb-border);
+    padding: 12px;
+    font-family: 'Comfortaa', sans-serif;
+}
+
+.sb-header {
+    color: var(--sb-text);
+    font-weight: 700;
+    letter-spacing: 0.25px;
+    padding: 8px 6px 14px 6px;
+    border-bottom: 1px solid var(--sb-border);
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-family: 'Comfortaa', sans-serif;
+}
+
+.sb-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.sb-section {
+    background: #242424;
+    border: 1px solid var(--sb-border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Toggle Button */
+.sb-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: space-between;
+    background: transparent;
+    color: var(--sb-text);
+    border: none;
+    text-align: left;
+    padding: 12px 14px;
+    font-size: 15px;
+    font-family: 'Comfortaa', sans-serif;
+    cursor: pointer;
+    transition: background-color 140ms ease, color 140ms ease;
+}
+
+    .sb-toggle:hover {
+        background: rgba(122, 19, 127, 0.12); /* highlight tint */
+        color: #fff;
+    }
+
+    .sb-toggle.is-open {
+        border-bottom: 1px solid var(--sb-border);
+        background: rgba(122, 19, 127, 0.18);
+        color: #fff;
+    }
+
+    .sb-toggle:focus-visible {
+        outline: 3px solid var(--sb-focus);
+        outline-offset: -2px;
+        border-radius: 8px;
+    }
+
+.sb-toggle__title {
+    font-weight: 600;
+}
+
+.sb-toggle__chevron {
+    color: var(--sb-highlight);
+    font-size: 16px;
+    line-height: 1;
+}
+
+/* Panel (expand/collapse) */
+.sb-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 220ms ease;
+    background: #202020;
+}
+
+    .sb-panel.open {
+        max-height: 500px; /* large enough for content; adjust if needed */
+    }
+
+/* Radio group */
+.sb-fieldset {
+    border: 0;
+    margin: 0;
+    padding: 10px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sr-only {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+    border: 0;
+    padding: 0;
+    margin: -1px;
+}
+
+/* Radio item */
+.sb-radio {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    color: var(--sb-muted);
+    padding: 8px 8px;
+    border-radius: 8px;
+    transition: background-color 120ms ease, color 120ms ease;
+    user-select: none;
+}
+
+    .sb-radio:hover {
+        background: rgba(50, 50, 50, 0.5);
+        color: #fff;
+    }
+
+    .sb-radio input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+/* Custom radio visual */
+.sb-radio__custom {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--sb-base);
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+.sb-radio__label {
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+/* Checked state */
+.sb-radio input:checked + .sb-radio__custom {
+    border-color: var(--sb-highlight);
+    box-shadow: 0 0 0 3px rgba(122, 19, 127, 0.25);
+}
+
+    .sb-radio input:checked + .sb-radio__custom::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 8px;
+        height: 8px;
+        background: var(--sb-highlight);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+/* Focus visible on the whole label when radio gets focus via keyboard */
+.sb-radio input:focus-visible + .sb-radio__custom {
+    outline: 3px solid var(--sb-focus);
+    outline-offset: 2px;
+}
+
+/* Selected label color boost */
+.sb-radio input:checked + .sb-radio__custom + .sb-radio__label {
+    color: #fff;
+}
+
+/* Thin scrollbars (optional) */
+.sb-container {
+    scrollbar-color: var(--sb-base) transparent;
+}
+
+    .sb-container::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    .sb-container::-webkit-scrollbar-thumb {
+        background: var(--sb-base);
+        border-radius: 6px;
+    }
+
+    .sb-container::-webkit-scrollbar-track {
+        background: transparent;
+    }
+

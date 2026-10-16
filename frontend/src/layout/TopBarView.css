@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --tb-height: 56px;
+    --tb-bg: #323232; 
+    --tb-fg: #ffffff; 
+    --tb-accent: #94a3b8; /* slate-400 */
+    --tb-hover: #cbd5e1; /* slate-300 */
+    --tb-border: rgba(255,255,255,0.08);
+}
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: var(--tb-height);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* left / title / right */
+    align-items: center;
+    padding: 0 12px;
+    background: var(--tb-bg);
+    color: var(--tb-fg);
+    border-bottom: 1px solid var(--tb-border);
+    -webkit-backdrop-filter: saturate(160%) blur(6px);
+    backdrop-filter: saturate(160%) blur(6px);
+}
+
+.topbar__section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.topbar__left {
+    justify-self: start;
+}
+
+.topbar__right {
+    justify-self: end;
+}
+
+.topbar__logo {
+    display: block;
+    width: 120px;
+    height: 56px;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.25));
+}
+
+.topbar__title {
+    grid-column: 2;
+    font-family: 'Comfortaa', sans-serif;
+    justify-self: center;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+    margin: 0;
+}
+
+.topbar__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--tb-border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--tb-accent);
+    cursor: pointer;
+    transition: border-color 120ms ease, color 120ms ease, background 120ms ease, transform 60ms ease;
+}
+
+    .topbar__btn:hover {
+        color: var(--tb-hover);
+        border-color: rgba(255,255,255,0.18);
+        background: rgba(255,255,255,0.04);
+    }
+
+    .topbar__btn:active {
+        transform: translateY(1px);
+    }
+
+    .topbar__btn:focus-visible {
+        outline: 2px solid #60a5fa; /* blue-400 */
+        outline-offset: 2px;
+    }
+
+.topbar__icon {
+    display: block;
+}

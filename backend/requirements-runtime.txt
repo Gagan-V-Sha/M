@@ -1,0 +1,32 @@
+# Pi / always-on host — no MinerU, no torch.
+# pip install -r requirements-runtime.txt
+
+# --- FastAPI backend ---
+bleach>=6.0.0
+fastapi>=0.115.0
+starlette>=0.41.0
+httpx>=0.25.0
+pytest>=8.0.0
+uvicorn[standard]
+sqlalchemy
+pydantic
+python-multipart
+PyJWT>=2.8.0
+cryptography>=43.0.0
+passlib[bcrypt]
+bcrypt
+playwright
+jinja2
+slowapi
+python-dotenv
+email-validator
+alembic
+pyotp
+sentry-sdk[fastapi]>=2.0.0
+psycopg2-binary>=2.9.9
+
+# Light helpers still used outside MinerU
+boto3>=1.28.43
+pdfminer.six>=20251230
+scikit-image>=0.25.0,<1.0.0
+matplotlib>=3.10,<4
